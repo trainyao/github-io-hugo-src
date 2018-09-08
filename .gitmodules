@@ -1,0 +1,6 @@
+[submodule "themes/hugo-theme-nix"]
+	path = themes/hugo-theme-nix
+	url = https://github.com/LordMathis/hugo-theme-nix.git
+[submodule "public"]
+	path = public
+	url = https://github.com/trainyao/trainyao.github.io.git
