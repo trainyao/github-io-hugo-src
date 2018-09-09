@@ -3,11 +3,14 @@ languageCode = "zh-cn"
 title = "trainyao.github.io"
 theme = "hugo-theme-nix"
 [params]
-  Name = "Hello, I'm trainyao."
-  HeaderUsername = "trainyao"
-  HeaderHostname = "home"
-  About = "and welcome to my blog."
-  ProfilePicture = "https://www.google.com.hk/webhp?hl=en&sa=X&ved=0ahUKEwiDxNTYi6vdAhVCMN4KHTENDCkQPAgD"
+Name = "Hello, I'm trainyao."
+HeaderUsername = "trainyao"
+HeaderHostname = "home"
+About = "And welcome to my blog. You can also contact me on Wechat (the_amazing_train)."
+ProfilePicture = "/img/me.jpg"
+GithubID = "trainyao"
+LinkedInID = "昌宇-姚-618417121"
+Email = "trainyao@gmail.com"
   
 [menu]
   [[menu.header]]
