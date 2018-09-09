@@ -1,5 +1,15 @@
+---
+author: "trainyao"
+date: 2018-06-04 07:15:34
+linktitle: skynet 概览
+title: skynet 概览
+weight: 10
+---
+
 这个星期以来，由于工作需要使用skynet，于是看了5天skynet的源码。收获很多，于是周末写篇博文总结一下这周以来的学习。
+
 这5天的学习过程可以概括为5句话：（因为5天嘛）
+
 1. 代码结构，从main函数开始
 2. skynet启动过程，worker线程工作过程
 3. skynet启动过程，skynet数据结构熟悉，
@@ -7,16 +17,20 @@
 5. lua层逻辑协程的使用熟悉，服务之间通过消息交互的过程
 
 看了5天后回过头来发现，其实了解的还停留在skynet的核心部分，还没有走出核心。因为skynet还包含很多其他内容，比如他的消息机制的各种api、socket支持、loginserver gateserver、datacenter、harbor等等。。。
+
 不过问题也不大，毕竟核心比较重要，后续还要继续学习。
+
 那下面就来总结一下这5天都看到来什么内容。有可能因为我了解尚浅，写出来的和实际的skynet有出入。不过没关系，后续会回过头来再看看。
 
 下面的总结会按照这个结构：
+
 - 源码目录结构
 - skynet的结构图以及工作过程
 
 那么，开始吧。
 
 ## 1. 源码目录结构
+
 可以用一个段落来说明
 
 ``` shell
@@ -46,10 +60,10 @@ drwxr-xr-x   8 root  staff     272  6  1 05:36 service-src - ./cservice 里的so
 drwxr-xr-x  41 root  staff    1394  6  1 05:36 skynet-src -- ./skynet 的源文件
 drwxr-xr-x   3 root  staff     102  6  1 05:38 skynet.dSYM
 drwxr-xr-x  38 root  staff    1292  6  1 05:36 test -- 单元测试文件
-
-````
+```
 
 从文件目录分析可以看出，skynet这个框架的内容既`包含了c语言的实现`（主要是c语言），也`包含了lua逻辑`（一些配置部分，或者可以被替代或者修改的逻辑，如服务加载器launcher.lua的逻辑, 或skynet启动的逻辑bootstrap.lua）。
+
 将这两部分东西分离开的好处是一些与skynet核心无关的逻辑可以被动态的修改，或者skynet用户可以根据自己的需要去改动这部分逻辑，比较灵活。
 
 其次,skynet除了可以加载`lua文件`作为服务(这主要是通过launcher服务实现的),也可以加载`so文件`作为服务(这种服务在skynet内核里面称为module, 如snlua服务和logger服务).由于这部分功能属于skynet内核的功能,使用时需要按照skynet内核定义的api来使用.
@@ -79,5 +93,4 @@ worker在消费一级队列的时候,会争抢一个自旋锁来弹出二级消�
 skynet有自己的线程使用方式,在支持其他工具时(如mysql)需要重写协议的实现.因为这样做才能保持服务在使用工具时依然受skynet控制,并且保持高效.
 
 作为一个基础设施框架,skynet封装了很多游戏中的逻辑开发需要用到的工具,比如广播,和数据中心.这些都还没细看具体是怎么实现的,后面会发文章单独看他们的实现.
-
 

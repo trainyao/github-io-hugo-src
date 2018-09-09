@@ -1,3 +1,11 @@
+---
+author: "trainyao"
+date: 2018-02-09 09:44:45
+linktitle: 类unix系统提示效率的alias
+title: 类unix系统提示效率的alias
+weight: 10
+---
+
 ``` shell
 # git
 alias gs='git status '

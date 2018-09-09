@@ -6,10 +6,38 @@ theme = "hugo-theme-nix"
   Name = "Hello, I'm trainyao."
   HeaderUsername = "trainyao"
   HeaderHostname = "home"
-  About = "about train"
+  About = "and welcome to my blog."
   ProfilePicture = "https://www.google.com.hk/webhp?hl=en&sa=X&ved=0ahUKEwiDxNTYi6vdAhVCMN4KHTENDCkQPAgD"
+  
 [menu]
   [[menu.header]]
-    name = "读书笔记"
-    weight = 0
-    url = "/content/post/bookread"
+    identifier = "blog"
+    name = "日志"
+    weight = 1
+  [[menu.header]]
+    identifier = "blog"
+    name = "日志"
+    weight = 2
+  [[menu.header]]
+    identifier = "thoughts"
+    name = "脑洞"
+    weight = 3
+    url = "/post/thoughts"
+  [[menu.header]]
+    identifier = "other"
+    name = "其他"
+    weight = 999
+
+  [[menu.header]]
+    parent = "blog"
+    identifier = "bookread"
+    name = "读书笔记/深入理解计算机系统"
+    url = "/post/bookread/computer_system"
+  [[menu.header]]
+    parent = "blog"
+    name = "skynet"
+    url = "/post/skynet"
+  [[menu.header]]
+    parent = "other"
+    name = "快速开发"
+    url = "/post/other/repid_develop"
