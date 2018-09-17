@@ -5,6 +5,7 @@ theme = "hugo-theme-nix"
 [params]
 Name = "Hello, I'm trainyao."
 HeaderUsername = "trainyao"
+
 HeaderHostname = "home"
 About = "And welcome to my blog. You can also contact me on Wechat (the_amazing_train)."
 ProfilePicture = "/img/me.jpg"
@@ -33,9 +34,14 @@ Email = "trainyao@gmail.com"
 
   [[menu.header]]
     parent = "blog"
-    identifier = "bookread"
+    identifier = "computer_sysem"
     name = "读书笔记/深入理解计算机系统"
     url = "/post/bookread/computer_system"
+  [[menu.header]]
+    parent = "blog"
+    identifier = "kubernetes_the_definitive_guide"
+    name = "读书笔记/Kubernetes 权威指南"
+    url = "/post/bookread/kubernetes_the_definitive_guide"
   [[menu.header]]
     parent = "blog"
     name = "skynet"
