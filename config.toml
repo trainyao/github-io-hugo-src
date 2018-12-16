@@ -34,6 +34,16 @@ Email = "trainyao@gmail.com"
 
   [[menu.header]]
     parent = "blog"
+    name = "service mesh/istio"
+    url = "/post/istio"
+
+  [[menu.header]]
+    parent = "blog"
+    identifier = "translate"
+    name = "翻译"
+    url = "/post/translate"
+  [[menu.header]]
+    parent = "blog"
     identifier = "computer_sysem"
     name = "读书笔记/深入理解计算机系统"
     url = "/post/bookread/computer_system"
