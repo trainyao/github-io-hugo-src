@@ -34,6 +34,10 @@ Email = "trainyao@gmail.com"
 
   [[menu.header]]
     parent = "blog"
+    name = "kubernetes"
+    url = "/post/kubernetes"
+  [[menu.header]]
+    parent = "blog"
     name = "service mesh/istio"
     url = "/post/istio"
 
