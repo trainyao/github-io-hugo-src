@@ -36,10 +36,22 @@ Email = "trainyao@gmail.com"
     parent = "blog"
     name = "kubernetes"
     url = "/post/kubernetes"
+    weight = 1
   [[menu.header]]
     parent = "blog"
     name = "service mesh/istio"
     url = "/post/istio"
+    weight = 2
+  [[menu.header]]
+    parent = "blog"
+    name = "sofastack/mosn"
+    url = "/post/sofastack/mosn"
+    weight = 3
+  [[menu.header]]
+    parent = "blog"
+    name = "skynet"
+    url = "/post/skynet"
+    weight = 4
 
   [[menu.header]]
     parent = "blog"
@@ -56,10 +68,6 @@ Email = "trainyao@gmail.com"
     identifier = "kubernetes_the_definitive_guide"
     name = "读书笔记/Kubernetes 权威指南"
     url = "/post/bookread/kubernetes_the_definitive_guide"
-  [[menu.header]]
-    parent = "blog"
-    name = "skynet"
-    url = "/post/skynet"
   [[menu.header]]
     parent = "other"
     name = "快速开发"
