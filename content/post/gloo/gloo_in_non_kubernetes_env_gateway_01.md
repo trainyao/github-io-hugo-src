@@ -23,8 +23,7 @@ weight: 10
 1. 调试快速
 
     gloo 文档内的教程内容比较多的偏重在 kubernetes 环境下操作 gloo，而在调试 gloo 功能特性的过程中搭建个人 kubernetes 集群还是有一定成本的。
-    然而，docker-compose/docker run 的方式即直接也比较快速，而且在实践过程中也发现，基于 gloo 官方文档内的 kubernetes 操作是可以等价迁移过去 docker-compose + consul 的操作的。
-
+    然而，docker-compose/docker run 的方式很直接也比较快速，而且在实践过程中也发现，基于 gloo 官方文档内的 kubernetes 操作是可以等价迁移过去 docker-compose + consul 的操作的。
 
 1. 技术方案过渡
 
@@ -45,7 +44,7 @@ gloo 是 [solo](https://www.solo.io/company/about-us/) 公司的一个开源产�
 
 [envoy](https://www.envoyproxy.io/) 是一个功能强大的4层&7层代理，它性能较好、可扩展性强，也比较稳定。由于它基于 http2 协议，所以它在7层上支持 rest、grpc 协议的路由功能。它能够被用作服务的边界网关，而且由于比较稳定，且系统资源占用较少，也被用作微服务里的服务边车（比如在 istio 里），与业务服务一起部署。
 
-envoy 的功能如此强大，以致它的配置也比较复杂。gloo 在 envoy 的上层建立了一个控制面板，将自己抽离的一些业务对象（比如下面会提及的 proxy virtualserivce 等）转换成 envoy 的配置并且加以维护。用户只需操作 gloo 抽离的这些对象即可配置网关，而不需要考虑 envoy 的复杂配置。这样的中间层是有好处的，比如后续想要更换代理实现，也可以将 envoy 更换掉，而翻译配置的模块只需改写成从翻译 envoy 的配置为翻译新代理实现（如 nginx）即可。
+envoy 的功能如此强大，以致它的配置也比较复杂。gloo 在 envoy 的上层建立了一个控制面板，将自己抽离的一些业务对象（比如下面会提及的 proxy virtualserivce 等）转换成 envoy 的配置并且加以维护。用户只需操作 gloo 抽离的这些对象即可配置网关，而不需要考虑 envoy 的复杂配置。这样的中间层是有好处的，比如后续想要更换代理实现（比如 nginx，或者 [mosn](https://mosn.io/)），也可以将 envoy 更换掉，而翻译配置的模块只需改写成从翻译 envoy 的配置为翻译新代理实现即可。
 
 在真实工程环境中，使用 envoy 作为网关或者边车是一个不错的选择。但 envoy 的复杂配置增加了不少使用维护成本，最终你有可能会建立一个类似 gloo 的控制面板，满足工程需求。既然如此何不使用和扩展 gloo 呢？：）  
 
