@@ -44,6 +44,11 @@ Email = "trainyao@gmail.com"
     weight = 2
   [[menu.header]]
     parent = "blog"
+    name = "service mesh/envoy/gloo"
+    url = "/post/gloo"
+    weight = 3
+  [[menu.header]]
+    parent = "blog"
     name = "sofastack/mosn"
     url = "/post/sofastack/mosn"
     weight = 3
