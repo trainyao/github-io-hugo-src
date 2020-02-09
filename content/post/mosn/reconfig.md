@@ -12,10 +12,10 @@ weight: 10
 
 我们先将被重启的 mosn 进程称为 `旧 mosn`，将重启并接管流量的进程成为 `新 mosn`。
 
-# 1. 机制
+## 1. 机制
 mosn 没有使用重新读取 config 文件的方法来实现 reconfig，而是通过 `unix socket` 作为进程间通信，并将旧进程的监听 fd 通过 socket 传过去，新 mosn 接管 fd 并且重新读取 config，旧 mosn 进行 gracefully shutdown，以达到 reconfig 和平滑重启的功能。
 
-# 2. 旧mosn
+## 2. 旧mosn
 
 我们先从一个启动着的 mosn 进程看起，看看它是如何被重启的。
 
@@ -35,7 +35,7 @@ mosn 进程启动后，会创建一个叫 `reconfig.sock` 的 unix socket，创�
 - 旧 mosn 有30秒时间处理完现存请求
 - 30秒后，旧 mosn 关闭，链接由新 mosn 接管
 
-# 3. 新mosn
+## 3. 新mosn
 接下来是新 mosn 的启动。有两个问题: 
 
 1. 新 mosn 是如何将旧mosn的fd据为己有，并且接受数据的呢？
@@ -50,9 +50,9 @@ mosn 进程启动后，会创建一个叫 `reconfig.sock` 的 unix socket，创�
 	- 给 listen.sock 发送一个字节数据，通知旧 mosn：可以关闭了
 	- 至此，mosn reconfig 结束
 
-# 5. 后续疑问
+## 5. 后续疑问
 1. 新 mosn 通过 `net.FileListener` 方法处理完 fd 并初始化了 listener，由于处理后的 fd 是一个副本，如果这个时候来了一个连接，那这个连接是会被旧 mosn 处理到，还是新 mosn，还是两者都会通知到呢? 关于这方面，可以做一个实验验证一下。
 
 参考资料:
 
-- [mosn 源码](https://github.com/sofastack/sofa-mosn)
+- [mosn 源码](https://github.com/mosn/mosn)
