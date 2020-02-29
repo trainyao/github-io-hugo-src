@@ -3,6 +3,7 @@ author: "trainyao"
 date: "2019-01-12"
 title: "使用 kubernetes 的 CA 证书自签名服务端 & 客户端证书"
 linktitle: "使用 kubernetes 的 CA 证书自签名服务端 & 客户端证书"
+categories: ["kubernetes"]
 weight: 10
 ---
 

@@ -3,6 +3,7 @@ author: "trainyao"
 date: 2018-02-16 15:41:02
 title: 现代计算机的异常控制流
 linktitle: 现代计算机的异常控制流
+categories: ["computer_system", "bookread", "深入理解计算机系统"]
 weight: 10
 ---
 

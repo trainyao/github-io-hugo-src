@@ -4,6 +4,7 @@ date: 2018-06-10 22:48:30
 title: skynet里的定时器
 linktitle: skynet里的定时器
 weight: 10
+categories: ["skynet"]
 ---
 
 这周花了点时间看了 skynet 关于定时器功能的源码,以及扩展的了解了一下定时器实现的其他方案,写一遍博客总结一下.内容会分为下面几部分:

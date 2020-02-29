@@ -3,9 +3,7 @@ author: "trainyao"
 date: 2018-09-08
 title: Lock mesh
 linktitle: Lock mesh
-menu:
-  main:
-    parent: type
+categories: ["脑洞"]
 weight: 10
 ---
 

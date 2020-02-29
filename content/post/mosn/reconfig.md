@@ -3,6 +3,7 @@ author: "trainyao"
 date: 2019-11-24
 title: mosn 的reconfig 机制
 linktitle: mosn 的reconfig 机制
+categories: ["mosn"]
 weight: 10
 ---
 

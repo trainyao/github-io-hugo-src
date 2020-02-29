@@ -3,6 +3,7 @@ author: "trainyao"
 date: 2020-02-15
 title: MOSN 源码分析 - 内存复用机制
 linktitle: MOSN 源码分析 - 内存复用机制
+categories: ["mosn"]
 weight: 10
 ---
 

@@ -3,6 +3,7 @@ author: "trainyao"
 date: 2020-02-09
 title: MOSN 源码分析 - 插件机制
 linktitle: MOSN 源码分析 - 插件机制
+categories: ["mosn"]
 weight: 10
 ---
 

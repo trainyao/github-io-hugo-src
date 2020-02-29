@@ -12,68 +12,75 @@ ProfilePicture = "/img/me.jpg"
 GithubID = "trainyao"
 LinkedInID = "昌宇-姚-618417121"
 Email = "trainyao@gmail.com"
-  
+
 [menu]
   [[menu.header]]
-    identifier = "blog"
-    name = "日志"
+    identifier = "all"
+    name = "all"
+    url = "/post/"
     weight = 1
   [[menu.header]]
-    identifier = "blog"
-    name = "日志"
+    identifier = "category"
+    name = "category"
     weight = 2
-  [[menu.header]]
-    identifier = "thoughts"
-    name = "脑洞"
-    weight = 3
-    url = "/post/thoughts"
-  [[menu.header]]
-    identifier = "other"
-    name = "其他"
-    weight = 999
+
 
   [[menu.header]]
-    parent = "blog"
+    parent = "category"
     name = "kubernetes"
-    url = "/post/kubernetes"
+    url = "/categories/kubernetes/"
     weight = 1
   [[menu.header]]
-    parent = "blog"
+    parent = "category"
     name = "service mesh/istio"
-    url = "/post/istio"
+    url = "/categories/istio/"
     weight = 2
   [[menu.header]]
-    parent = "blog"
+    parent = "category"
     name = "service mesh/envoy/gloo"
-    url = "/post/gloo"
+    url = "/categories/gloo/"
     weight = 3
   [[menu.header]]
-    parent = "blog"
+    parent = "category"
     name = "service mesh/mosn"
-    url = "/post/mosn"
+    url = "/categories/mosn/"
     weight = 3
   [[menu.header]]
-    parent = "blog"
+    parent = "category"
     name = "skynet"
-    url = "/post/skynet"
+    url = "/categories/skynet/"
     weight = 4
 
   [[menu.header]]
-    parent = "blog"
+    parent = "category"
     identifier = "translate"
     name = "翻译"
-    url = "/post/translate"
+    url = "/categories/翻译/"
   [[menu.header]]
-    parent = "blog"
+    parent = "category"
     identifier = "computer_sysem"
     name = "读书笔记/深入理解计算机系统"
-    url = "/post/bookread/computer_system"
+    url = "/categories/深入理解计算机系统/"
   [[menu.header]]
-    parent = "blog"
+    parent = "category"
     identifier = "kubernetes_the_definitive_guide"
     name = "读书笔记/Kubernetes 权威指南"
-    url = "/post/bookread/kubernetes_the_definitive_guide"
+    url = "/categories/Kubernetes 权威指南/"
   [[menu.header]]
+    identifier = "develop"
     parent = "other"
     name = "快速开发"
-    url = "/post/other/repid_develop"
+    url = "/categories/other/repid_develop/"
+
+  [[menu.header]]
+    identifier = "thoughts"
+    parent = "category"
+    name = "脑洞"
+    url = "/categories/脑洞/"
+    weight = 998
+  [[menu.header]]
+    identifier = "other"
+    parent = "category"
+    name = "其他"
+    url = "/categories/其他/"
+    weight = 999

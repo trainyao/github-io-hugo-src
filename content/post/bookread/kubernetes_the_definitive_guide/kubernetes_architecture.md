@@ -3,6 +3,7 @@ author: "trainyao"
 date: 2018-09-16 16:08:03
 title: kubernetes是怎么工作的以及其架构
 linktitle: kubernetes是怎么工作的以及其架构
+categories: ["bookread", "kubernetes_the_definitive_guide", "Kubernetes 权威指南"]
 weight: 10
 ---
 

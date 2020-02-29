@@ -3,6 +3,7 @@ author: "trainyao"
 date: 2018-12-08 18:25:54
 title: istio 流量劫持实验
 linktitle: istio 流量劫持实验
+categories: ["istio"]
 weight: 10
 ---
 

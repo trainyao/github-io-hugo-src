@@ -3,6 +3,7 @@ author: "trainyao"
 date: 2018-09-18
 title: Kubernetes 使用 IPVS/LVS 作为网络服务代理
 linktitle: Kubernetes 使用 IPVS/LVS 作为网络服务代理
+categories: ["翻译"]
 weight: 10
 ---
 

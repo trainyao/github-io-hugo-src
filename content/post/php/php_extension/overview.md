@@ -1,4 +1,12 @@
 
+---
+author: "trainyao"
+date: 2018-09-09
+linktitle: php 扩展
+title: php 扩展
+weight: 10
+categories: ["php"]
+---
 
 @(PHP)
 ###PHP扩展分享

@@ -3,6 +3,7 @@ author: "trainyao"
 date: 2018-02-09 09:44:45
 title: <<深入了解计算机系统>>整理
 linktitle: <<深入了解计算机系统>>整理
+categories: ["computer_system", "bookread", "深入理解计算机系统"]
 weight: 10
 ---
 

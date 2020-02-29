@@ -3,6 +3,7 @@ author: "trainyao"
 date: "2020-01-30"
 title: "使用 gloo 在非 kubernetes 环境搭建服务网关指南 - 初识 gloo"
 linktitle: "使用 gloo 在非 kubernetes 环境搭建服务网关指南 - 初识 gloo"
+categories: ["gloo"]
 weight: 10
 ---
 

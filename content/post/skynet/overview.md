@@ -4,6 +4,7 @@ date: 2018-06-04 07:15:34
 linktitle: skynet 概览
 title: skynet 概览
 weight: 10
+categories: ["skynet"]
 ---
 
 这个星期以来，由于工作需要使用skynet，于是看了5天skynet的源码。收获很多，于是周末写篇博文总结一下这周以来的学习。

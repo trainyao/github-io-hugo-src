@@ -3,6 +3,7 @@ author: "trainyao"
 date: 2018-02-09 09:44:45
 linktitle: 类unix系统提示效率的alias
 title: 类unix系统提示效率的alias
+categories: ["其他"]
 weight: 10
 ---
 
