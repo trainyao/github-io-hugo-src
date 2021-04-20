@@ -1,3 +1,13 @@
+---
+author: "trainyao"
+date: 2020-03-25
+linktitle: kubectl custom tool snippet
+title: kubectl custom tool snippet
+categories: ["其他"]
+weight: 10
+---
+
+```bash
 #!/bin/bash
 
 do=$1
@@ -25,3 +35,4 @@ echo $podname
 echo "kubectl ${do} ${podname} ${t} $3 $4 $5 $6"
 
 kubectl ${do} ${podname} ${t} $3 $4 $5 $6
+```

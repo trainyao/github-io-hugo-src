@@ -8,7 +8,7 @@ HeaderUsername = "trainyao"
 
 HeaderHostname = "home"
 About = "And welcome to my blog. You can also contact me on Wechat (the_amazing_train)."
-ProfilePicture = "/img/me.jpg"
+ProfilePicture = ""
 GithubID = "trainyao"
 LinkedInID = "昌宇-姚-618417121"
 Email = "trainyao@gmail.com"
@@ -30,6 +30,11 @@ Email = "trainyao@gmail.com"
     name = "kubernetes"
     url = "/categories/kubernetes/"
     weight = 1
+  [[menu.header]]
+    parent = "category"
+    name = "devops"
+    url = "/categories/devops/"
+    weight = 2
   [[menu.header]]
     parent = "category"
     name = "service mesh/istio"

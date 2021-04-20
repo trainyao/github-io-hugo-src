@@ -16,5 +16,6 @@ weight: 10
 - 有博文说 /root 目录下的文件夹和文件的权限和拥有者, 会影响 root ssh 登录, 这个待验证
 
 ref:
+
 - [https://stackoverflow.com/questions/41684706/login-refused-for-root-via-ssh](https://stackoverflow.com/questions/41684706/login-refused-for-root-via-ssh)
 - [https://superuser.com/questions/1137438/ssh-key-authentication-fails](https://superuser.com/questions/1137438/ssh-key-authentication-fails)
