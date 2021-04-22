@@ -1,6 +1,5 @@
 ---
 author: "trainyao"
-date: 2021-04-20
 title: ssh 使用方法 & 备忘
 linktitle: ssh 使用方法 & 备忘
 categories: ["devops"]
