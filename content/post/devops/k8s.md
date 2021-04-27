@@ -29,7 +29,28 @@ weight: 10
     - 从代码来看, ipvs 还分 `ipvs proxier` 和 `ipvs dual stack proxier`, 好像是对 ipv6 的支持
     - 从 interface implement 来看, 还实现了一个 `win userspace proxier`
     - iptables 实现:
-        - 
+        - TODO
+
+- scheduler 调度器
+    - default scheduler
+        - 根据 filter 规则筛选出符合条件的 node (Predicates 阶段,算法), 再用 rating 规则给 node 打分 (Priority 阶段,算法), 最高分 node 作为调度结果
+            - filter 规则有多种: 如判断 pod 资源 request 和 node 剩余资源是否符合, PV 所在的 node, 自定义 pod 资源, affinity 等等的维度
+        - 调度结果是给 pod 的 spec.NodeName 设置 node 的名字
+        - kubelet 找到有自己的 pod, 就会去部署?
+        - kubelet 在部署 pod 前还会执行一个 admit 阶段(实际上是执行 predicates 阶段的逻辑), 重复检查确认, 判断是否符合 node 调度条件, 以免感知时间差过程中, node 状态发生了变化
+        - kubelet admit 后, scheduler 会真正设置 nodename 到 pod 信息中, 这个步骤称为 "bind"
+        - 调度速度优化
+            - cache 化, 调度前 scheduler 会将 node 的信息读取一份到内存, 避免计算过程需要重复获取 node 信息
+            - 无锁化, 调度过程需要出队 scheduler FIFO/Priority Queue, 以及更新 cache, 尽在获取任务和更新 cache 才需要获取锁
+            - 根据 node 并行化, 计算后再写到 scheduler cache 中
+    - default scheduler 扩展机制
+        - go plugins 形式在调度的各个阶段, 提供插件机制
+        - 阶段:
+            - PreFilter
+            - PostFilter
+            - PostScoring
+            - PreBind
+            - PostBind
 
 - service
 	- clusterip
@@ -52,3 +73,7 @@ weight: 10
 			- 访问配置的 ip 可以直接访问到 pod
 			- 需要 client 能访问 ip 可以直接访问到至少一个 node
 			- 实际上流量会先经过配置的 IP, 再代理到 node
+
+ ref:
+ - [张磊大大的 k8s 课程](https://time.geekbang.org/column/intro/116)
+ - [k8s 源码](https://github.com/kubernetes/kubernetes.git)
