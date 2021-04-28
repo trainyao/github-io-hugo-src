@@ -1,0 +1,76 @@
+---
+author: "trainyao"
+title: redis 使用方法 & 备忘
+linktitle: redis 使用方法 & 备忘
+categories: ["devops"]
+weight: 10
+---
+
+- config (base on v6.2.0)
+    - general
+        - client & connections
+            - bind 0.0.0.0
+            - port 6379
+            - protected-mode yes # protected mode 只允许 socket 和 17.0.0.1 连接
+            - maxclients 10000
+            - requirepass password # 配置密码
+        - bgsave
+            - save time changecount # 多级配置持久化, 配置多长时间内变更过 key 数大于 changecount, 则进行bgsave
+                - save 900 1
+                - save 300 10
+                - save 60 10000
+        - file & dir
+            - dbfilename dump.rdb
+            - dir /data
+        - runtime
+            - maxmemory <bytes>
+            - maxmemory-policy
+                - noeviction
+                - volatile-lru|volatile-lfu|volatile-random|volatile-ttl
+                - allkeys-lru|allkeys-lfu|allkeys-random
+    - middle
+        - slowlog
+            - slowlog-log-slower-than 1000000 # 超过微数, 记录slowlog, 1000000 = 1s
+            - slowlog-max-len 128 # slowlog 内存中保存的份数, redis 的 slowlog 是保存在内存的, 注意内存用量
+        - client & connections
+            - tcp-backlog 511 # 繁忙时 server 入队的 backlog connections 数
+            - timeout 3600 # 3600 秒后关闭空闲的 client
+            - tcp-keepalive 300 # server 给 client 发送心跳检测, 超过配置时间断开连接
+        - log
+            - loglevel notice
+            - logfile ''
+            - syslog-enabled no # redis log 输出到 syslog
+        - runtime
+            - maxmemory-samples 5 # maxmemory 算法执行时在多少个 key 中计算 lru lfu 等算法, redis 不会在全量 key 中计算, 而是拿出配置数量 key 分组计算, 默认 5
+            - databases 16
+        - bgsage
+            - stop-writes-on-bgsave-error yes # bgsave 失败停止写入, 为了能让用户感知 bgsave 失败了, 或者减少数据损失?
+            - rdbcompression yes
+            - rdbchecksum yes # 是否计算 rdb 文件的 checksum, 如果配置为 no 则 rdb 文件 checksum 位 = 0
+    - high
+        - master & slave
+            - slave:
+                - connections
+                    - replicaof <masterip> <masterport> # master 节点的 host port
+                    - masterauth <master-password> # 连接 master 密码
+                    - masteruser <username>
+                - healthy slave
+                    - replica-serve-stale-data yes # 在主从延迟的时候, 是否可以查询从库
+                    - replica-read-only yes
+                    - replica-ignore-maxmemory yes # redis replica 默认忽略内存限制
+                    - repl-ping-replica-period 10 # replica pings master
+                    - repl-timeout 60 # replica stop ping master after timeout
+            - master:
+                - diskless sync
+                    - repl-diskless-sync no # replica 默认使用 disk 同步(bgsave), redis 开启新进程 bgsave 后产生数据文件传递到 replica, 否则 diskless sync 会从内存传递数据过去 slave
+                    - repl-diskless-sync-delay 5 
+                    - repl-diskless-load disabled
+                - nodelay
+                    - repl-disable-tcp-nodelay no # 默认开启nodelay, 要实时不要带宽, 关闭后要带宽不要实时, 主从数据会 delay 批量传过去 slave
+                - backlog
+                    - repl-backlog-size 1mb # 避免 replica 全量数据重传, 通过记录一个backlog buffer, replica重连后仅重传 backlog buffer
+                    - repl-backlog-ttl 3600 # backlog buffer ttl time
+                - healthy master
+                    - min-replicas-to-write 3 # 限制必须有 3 个 replica 存在, 然后 replica ping lag 必须 <= 10, master 才能写
+                    - min-replicas-max-lag 10
+
