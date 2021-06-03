@@ -67,7 +67,7 @@ weight: 10
                         - 测得 headless service 访问 pod 4k qps 左右, 2M/s 吞吐量
                         - 测得不同节点 pod ip qps 4k qps 左右, 3M/s 吞吐量
                 - 和 flannel 对比
-                    - cilium 换 flannel 过程中还发现 flannel daemonest 会报 `address already used`, 重启节点之后就好了, 怀疑是因为 cilium 配置过宿主机的网卡之类的, 重启之后配置重置过了
+                    - cilium 换 flannel 过程中还发现 flannel daemonest 会报 `fail to configure interface flannel.1 address already in use`, 重启节点之后就好了, 怀疑是因为 cilium 配置过宿主机的网卡之类的, 重启之后配置重置过了
                     - iperf 测得 `910Mbyte/s`
                     - siege -c 100 -t 2M
                         - 测得 service 访问 pod 4k qps 左右, 4M/s 吞吐量
