@@ -6,6 +6,21 @@ categories: ["devops"]
 weight: 10
 ---
 
+-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+- echo \
+  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+- curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+- echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+- apt-get install docker-ce docker-ce-cli containerd.io
+- apt-get install \
+    apt-transport-https \
+        ca-certificates \
+            curl \
+                gnupg \
+                    lsb-release
+
+
 - kubeadm init --kubernetes-version=1.18.1 --apiserver-advertise-address=192.168.128.130 --image-repository registry.aliyuncs.com/google_containers  --service-cidr=10.1.0.0/16  --pod-network-cidr=10.244.0.0/16
     - ref [https://www.cnblogs.com/xiao987334176/p/12696740.html](https://www.cnblogs.com/xiao987334176/p/12696740.html)
 - 安装 flannel: wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml && grep 10.244 -n kube-flannel.yml && sed -i 's/10.244.0.0\/16/[pod network cidr]/' && kubectl apply -f kube-flannel.yml
@@ -22,6 +37,43 @@ weight: 10
         - bridge
             - source code [containernetworking/plugins/bridge](https://github.com/containernetworking/plugins/blob/master/plugins/main/bridge/bridge.go)
 			- 依托 lib [github.com/vishvananda/netlink](https://github.com/vishvananda/netlink) 做 ip link add/set 命令操作
+        - cilium (v1.9.8)
+            - 安装
+                - 安装过程颇容易, 官网有提供 operator 直接一键安装 `kubectl apply -f https://raw.githubusercontent.com/cilium/cilium/v1.9/install/kubernetes/quick-install.yaml -n kube-system` [官方 install doc](https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-default/)
+                - 前置依赖
+                    - 挂在 bpf 目录 `sudo mount bpffs /sys/fs/bpf -t bpf && echo 'bpffs        /sys/fs/bpf      bpf     defaults 0 0' >> /etc/fstab` 
+                    - 打开内核 cilium 依赖的关于 bpf 的参数 via `/boot/config-$(uname -r)` 参考[官方文档描述](https://docs.cilium.io/en/v1.9/operations/system_requirements/#linux-kernel)
+                      ```
+                      CONFIG_BPF=y
+                      CONFIG_BPF_SYSCALL=y
+                      CONFIG_NET_CLS_BPF=y
+                      CONFIG_BPF_JIT=y
+                      CONFIG_NET_CLS_ACT=y
+                      CONFIG_NET_SCH_INGRESS=y
+                      CONFIG_CRYPTO_SHA1=y
+                      CONFIG_CRYPTO_USER_API_HASH=y
+                      CONFIG_CGROUPS=y
+                      CONFIG_CGROUP_BPF=y
+                      ```
+            - 调试
+                - [官方提供的连接测试用例](https://docs.cilium.io/en/v1.9/gettingstarted/k8s-install-default/#deploy-the-connectivity-test) `kubectl create ns cilium-test && kubectl apply -f https://raw.githubusercontent.com/cilium/cilium/v1.9/examples/kubernetes/connectivity-check/connectivity-check.yaml -n cilium-test`
+                - 其他博主调整过的用例 `kubectl apply -n cilium-test -f https://github.com/nevermosby/K8S-CNI-Cilium-Tutorial/raw/master/cilium/connectivity-check.yaml` 参考[博文](https://cilium.io/blog/2020/05/04/guest-blog-kubernetes-cilium)
+                - 可以使用不同主机上的 pod 互相访问 测试联通性, `docker run --rm trainyao/toolbox:ubuntu-18-40 -- ping [pod IP from other worker]`
+            - 压测
+                - 压测数据 (千兆网卡)
+                    - iperf 测得 `907Mbyte/s`
+                    - siege -c 100 -t 2M
+                        - 测得 service 访问 pod 4k qps 左右, 1.79M/s 吞吐量
+                        - 测得 headless service 访问 pod 4k qps 左右, 2M/s 吞吐量
+                        - 测得不同节点 pod ip qps 4k qps 左右, 3M/s 吞吐量
+                - 和 flannel 对比
+                    - cilium 换 flannel 过程中还发现 flannel daemonest 会报 `address already used`, 重启节点之后就好了, 怀疑是因为 cilium 配置过宿主机的网卡之类的, 重启之后配置重置过了
+                    - iperf 测得 `910Mbyte/s`
+                    - siege -c 100 -t 2M
+                        - 测得 service 访问 pod 4k qps 左右, 4M/s 吞吐量
+                        - 测得 headless service 访问 pod 4k qps 左右, 4M/s 吞吐量
+                        - 测得不同节点 pod ip qps 5k qps 左右, 3M/s 吞吐量
+                - 怀疑可能是节点规模没上去, iptable / eBPF 差距应该没这么大? 待验证
 
 - kube-proxy (v1.17.17)
     - 主要通过 proxyServer 里的 proxier 来响应 k8s 资源变化, 实现了多种接口: `k8s.io/kubernetes/pkg/proxy/config` 里的 `config.EndpointHandler`, `config.EndpointSlaceHandler`, `config.ServiceHandler`, `config.NodeHandler`, 可以代码查找下列 interface, 主要关注不同 proxier 对上述接口的实现
@@ -29,7 +81,10 @@ weight: 10
     - 从代码来看, ipvs 还分 `ipvs proxier` 和 `ipvs dual stack proxier`, 好像是对 ipv6 的支持
     - 从 interface implement 来看, 还实现了一个 `win userspace proxier`
     - iptables 实现:
-        - TODO
+        - 通过 `pkg/proxy/iptables/proxier.go`.`syncProxyRules()` 执行 node 变化后 iptables 的同步
+        - 操作 iptables 通过 `pkg/util/iptables`.`runner` 实现了 `pkg/util/iptables`.`Interface`
+        - `pkg/util/iptables`.`runner` 实际上是执行 `iptables` `ip6tables` 命令, runner 里还有一个实现了 `k8s.io/utils/exec`.`Interface` 的 `k8s.io/util/exec`.`executor`
+            - 其中还包括一个 `k8s.io/utils/exec`.`Cmd` 的接口抽象 `k8s.io/utils/exec`.`cmdWrapper`, 它包装了 `os/exec`.`Cmd`
 
 - scheduler 调度器
     - default scheduler
