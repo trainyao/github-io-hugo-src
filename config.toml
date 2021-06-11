@@ -2,10 +2,11 @@ baseURL = "https://trainyao.github.io/"
 languageCode = "zh-cn"
 title = "trainyao.github.io"
 theme = "hugo-theme-nix"
+
 [params]
 Name = "Hello, I'm trainyao."
 HeaderUsername = "trainyao"
-
+toc = true
 HeaderHostname = "home"
 About = "And welcome to my blog. You can also contact me on Wechat (the_amazing_train)."
 ProfilePicture = ""
@@ -15,8 +16,8 @@ Email = "trainyao@gmail.com"
 
 [menu]
   [[menu.header]]
-    identifier = "all"
-    name = "all"
+    identifier = "post"
+    name = "post"
     url = "/post/"
     weight = 1
   [[menu.header]]
