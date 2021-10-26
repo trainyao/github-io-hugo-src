@@ -48,4 +48,15 @@ alias drmi='docker rmi '
 alias drm='docker rm '
 alias dr='docker run '
 alias dk='docker kill '
+
+# k8s
+alias k=kubectl;
+alias kgpw="kubectl get pods -o wide ";
+alias kgpa="kubectl get pods -A ";
+unset HISTSIZE;
+alias di="docker images";
+alias dp="docker ps";
+alias dpa="docker ps -a";
+alias drm="docker rm";
+alias drmi="docker rmi"
 ```
