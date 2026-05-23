@@ -28,6 +28,11 @@ Email = "trainyao@gmail.com"
 
   [[menu.header]]
     parent = "category"
+    name = "ai"
+    url = "/categories/ai/"
+    weight = 1
+  [[menu.header]]
+    parent = "category"
     name = "kubernetes"
     url = "/categories/kubernetes/"
     weight = 1
